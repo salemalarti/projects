@@ -1,65 +1,40 @@
-const express = require('express');
-const cors = require('cors');
-require('dotenv').config();
+// App entry point.
+//  - Locally:  npm start  (or  npm run dev)  starts a web server on PORT.
+//  - On Vercel: Vercel detects this Express app automatically and uses the
+//    exported `app` (it serves files in public/ from its CDN).
+require('express'); // tells Vercel's zero-config detection this is an Express app
+const config = require('./src/config');
+const logger = require('./src/logger');
+const { createApp } = require('./src/app');
+const { getDb, closeDb } = require('./src/db');
+const { migrate } = require('./src/db/migrate');
 
-const app = express();
+const app = createApp();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Dummy data for now (will connect to Supabase later)
-const gamesData = [
-  { name: 'Brookhaven RP', visits: 82500000000, genre: 'Roleplay', players: 800000, monthlyTrend: 'up' },
-  { name: 'Adopt Me', visits: 26700000000, genre: 'Roleplay', players: 400000, monthlyTrend: 'stable' },
-  { name: 'Blox Fruits', visits: 40000000000, genre: 'RPG', players: 600000, monthlyTrend: 'up' },
-  { name: 'Jujutsu Shenanigans', visits: 15000000000, genre: 'Anime Combat', players: 350000, monthlyTrend: 'up' },
-  { name: '99 Nights in Forest', visits: 26000000000, genre: 'Survival', players: 200000, monthlyTrend: 'up' },
-  { name: 'Rivals', visits: 12000000000, genre: 'FPS', players: 250000, monthlyTrend: 'stable' },
-];
-
-// Routes
-app.get('/api/trending-games', (req, res) => {
-  // Sort by visits (most popular first)
-  const sorted = [...gamesData].sort((a, b) => b.visits - a.visits);
-  res.json(sorted);
-});
-
-app.get('/api/games-by-genre', (req, res) => {
-  // Group games by genre
-  const grouped = {};
-  gamesData.forEach(game => {
-    if (!grouped[game.genre]) {
-      grouped[game.genre] = [];
+async function start() {
+  if (!config.databaseUrl) {
+    logger.warn('DATABASE_URL is not set: pages will load but data and signups will not work. See SETUP.md.');
+  } else if (process.env.AUTO_MIGRATE !== 'false') {
+    try {
+      const ran = await migrate(await getDb());
+      if (ran.length) logger.info(`Applied migrations: ${ran.join(', ')}`);
+    } catch (err) {
+      logger.error(`Could not connect to the database: ${err.message}`);
     }
-    grouped[game.genre].push(game);
+  }
+  if (!config.email.enabled) {
+    logger.warn('Email is not configured (EMAIL_PROVIDER/EMAIL_API_KEY/EMAIL_FROM). Signups will get their access link on screen instead.');
+  }
+  const server = app.listen(config.port, () => {
+    logger.info(`Server running on http://localhost:${config.port}`);
+    logger.info(`Landing page:  http://localhost:${config.port}/`);
+    logger.info(`Dashboard:     http://localhost:${config.port}/dashboard`);
   });
-  res.json(grouped);
-});
+  const shutdown = () => server.close(() => closeDb().finally(() => process.exit(0)));
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
+}
 
-app.get('/api/success-metrics', (req, res) => {
-  // Return insights about what makes games succeed
-  const metrics = {
-    topGenres: ['Roleplay', 'RPG', 'Anime Combat', 'Survival'],
-    avgWinningVisits: 30000000000,
-    commonMechanics: ['Pet Trading', 'Progression Systems', 'Social Interaction', 'Daily Rewards'],
-    monetizationMethods: ['Game Passes', 'In-game Currency', 'Battle Pass', 'Cosmetics'],
-  };
-  res.json(metrics);
-});
+if (require.main === module) start();
 
-app.get('/api/trending-mechanics', (req, res) => {
-  const mechanics = [
-    { name: 'Idle Loops', growth: '+45%', description: 'Games that let players progress while AFK' },
-    { name: 'Cozy Simulators', growth: '+78%', description: 'Low-stress farming/building games' },
-    { name: 'Short-Format Games', growth: '+52%', description: '5-10 minute engagement sessions' },
-    { name: 'Social Trading', growth: '+35%', description: 'Pet/item trading with friends' },
-  ];
-  res.json(mechanics);
-});
-
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log('Open http://localhost:5000 in your browser');
-});
+module.exports = app;

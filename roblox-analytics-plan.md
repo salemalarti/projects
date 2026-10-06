@@ -1,5 +1,10 @@
 # Roblox Analytics Platform - Implementation Roadmap
 
+> **Status (Oct 2026):** Phase 1 (real Roblox data pipeline, database, dashboard) and Phase 2 infrastructure
+> (public landing page, beta signups in Supabase, email confirmation, beta access links) are built.
+> Retention, session length and monetization are **not** publicly available from Roblox, so they are not shown.
+> See README.md for details.
+
 ## Phase 1: Proof of Concept (Weeks 1-4)
 
 ### Phase 1a: Roblox Data Pipeline

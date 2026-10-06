@@ -5,14 +5,15 @@
 ```
 Title: I'm Building an Analytics Tool for Roblox Devs - Join Free Beta
 
-99% of Roblox games fail silently. I built a tool to fix that.
+Most Roblox games never find players. I'm building a tool so you can check the market before you spend months building.
 
-Instead of guessing what makes games succeed, you get real data on:
-- Top trending games & why they work
-- Genre trends (which ones are growing?)
-- Mechanics that drive player retention
-- Monetization strategies that don't kill engagement
-- Success predictions for your own game ideas
+It collects real data from Roblox every day:
+- The games on Roblox's charts, with live player counts and total visits
+- Which games are growing or slowing down, week over week
+- Which genres hold the most players right now
+- Each game's player and visit history (beta)
+
+No made-up numbers: things Roblox doesn't publish (like retention or revenue) are marked as unavailable.
 
 **It's free during beta.** I'm looking for 20 developers to test it and give feedback.
 
@@ -30,10 +31,10 @@ Hey devs! 👋
 I just launched a free analytics dashboard for Roblox developers.
 
 Instead of publishing games blind, you get real data on:
-✅ What genres are trending right now
-✅ Why top games like Brookhaven RP succeed
-✅ What mechanics drive retention
-✅ Fair monetization strategies
+✅ Which games on the Roblox charts are growing or slowing down
+✅ Which genres hold the most players right now
+✅ Player and visit history for top games
+✅ Collected from Roblox daily, with no made-up numbers
 
 Currently recruiting 20 beta testers. It's free while we validate the product.
 
@@ -45,15 +46,12 @@ Drop a comment if you're interested! We'll do quick calls to understand what YOU
 ## Twitter/X Post
 
 ```
-99% of Roblox games fail because devs don't understand what players want.
+Most Roblox games never find players. Check the market before you build.
 
-I built an analytics tool to change that.
-
-Real data on:
-• Trending genres & mechanics
-• Why top games succeed
-• Monetization strategies that work
-• Success predictions for your idea
+I built a free tool with real Roblox data, collected daily:
+• Which games are growing (and which are fading)
+• Which genres hold the most players
+• Player and visit history for top games
 
 Join beta (free): [landing page link]
 
@@ -68,7 +66,7 @@ Hey [Creator Name]!
 Love your Roblox dev videos. I just built an analytics tool for developers 
 to understand what makes games succeed.
 
-Instead of guessing, devs get data on trending mechanics, monetization, etc.
+Instead of guessing, devs see which games and genres are actually growing, using real Roblox data collected daily.
 
 Thought you might find it useful - offering free beta access to creators.
 
@@ -145,9 +143,9 @@ trending in that space right now.
 ```
 Just launched a free analytics tool for Roblox developers.
 
-Problem: 99% of games fail because creators don't understand market demand.
+Problem: most Roblox games never find players, and creators build without seeing market demand.
 
-Solution: Real data on trending games, mechanics, and monetization strategies.
+Solution: Real data on which Roblox games and genres are growing, collected daily.
 
 Currently recruiting 20 beta testers. DM if interested in gaming/creator economy space.
 
@@ -161,6 +159,7 @@ Currently recruiting 20 beta testers. DM if interested in gaming/creator economy
 ❌ Don't post the same message to 20 Discords (looks like spam)
 ❌ Don't DM devs randomly asking them to use it
 ❌ Don't oversell (it's beta, be honest about what it is)
+❌ Don't quote stats we can't source (e.g. "99% of games fail") or promise data Roblox doesn't publish (retention, revenue)
 ❌ Don't ask for money yet (validation comes first)
 ✅ Do be genuine and listen to feedback
 ✅ Do actually use feedback to improve

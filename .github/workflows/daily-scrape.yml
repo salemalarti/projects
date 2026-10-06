@@ -1,0 +1,29 @@
+# Collects Roblox data once a day and saves it to Supabase.
+# Needs one repository secret: DATABASE_URL (Settings -> Secrets and variables -> Actions).
+name: Daily Roblox data collection
+
+on:
+  schedule:
+    - cron: '17 3 * * *' # every day at 03:17 UTC
+  workflow_dispatch: {} # adds a "Run workflow" button for manual runs
+
+concurrency:
+  group: daily-scrape
+  cancel-in-progress: false
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --omit=dev
+      - name: Collect Roblox data
+        run: npm run scrape
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          BASE_URL: ${{ vars.BASE_URL }}
